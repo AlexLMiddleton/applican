@@ -1,0 +1,16 @@
+.homepage-options {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  height: 25vw;
+}
+
+.homepage-options div {
+  width: 20vw;
+}
+
+.homepage-options div a {
+  display: inline-block;
+  margin-top: 5%;
+  font-size: 1.5em;
+}

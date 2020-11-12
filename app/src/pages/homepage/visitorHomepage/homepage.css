@@ -1,0 +1,22 @@
+.homepage-options {
+  height: 65vh;
+  width: 80%;
+  margin: auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.homepage-options a {
+  margin-top: 1%;
+  font-size: 1em;
+}
+
+.homepage-options a div {
+  padding: 3% 3%;
+}
+
+.homepage-options a div svg {
+  font-size: 8em;
+}

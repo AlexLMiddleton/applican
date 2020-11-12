@@ -1,0 +1,15 @@
+.homepage-options {
+  display: grid;
+  grid-template-columns: 20vw 20vw;
+  grid-row: auto auto;
+  grid-column-gap: 5%;
+  grid-row-gap: 5%;
+  height: 25vh;
+  width: 80vw;
+}
+
+.homepage-options a div {
+  width: 20vw;
+  margin-top: 5%;
+  font-size: 1.5em;
+}

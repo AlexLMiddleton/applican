@@ -1,0 +1,22 @@
+.wrapper {
+  display: flex;
+}
+
+.container {
+  width: 25%;
+  margin: auto;
+}
+
+.container button {
+  border-radius: 0;
+  width: 80%;
+  padding-top: 3%;
+  padding-bottom: 3%;
+  margin-top: 3%;
+  margin-bottom: 3%;
+}
+
+#forgot-password {
+  display: block;
+  margin-bottom: 3%;
+}

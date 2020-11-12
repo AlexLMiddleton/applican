@@ -1,0 +1,9 @@
+.positionRowContainer {
+  display: inline-grid;
+  width: 35%;
+  padding: 1% 1%;
+}
+
+a {
+  text-decoration: none;
+}

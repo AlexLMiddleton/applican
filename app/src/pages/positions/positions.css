@@ -1,0 +1,16 @@
+.position-container {
+  display: grid;
+  grid-row: auto auto;
+  grid-column-gap: 5%;
+  grid-row-gap: 5%;
+  width: 80vw;
+  margin: auto;
+}
+
+.position-container div {
+  padding: 1% 0;
+}
+
+.applicant-buttons a:visited {
+  color: white;
+}

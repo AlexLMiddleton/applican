@@ -1,0 +1,23 @@
+.position-container {
+  display: grid;
+  grid-template-columns: 37.5vw 37.5vw;
+  grid-row: auto auto;
+  grid-column-gap: 5%;
+  grid-row-gap: 5%;
+  width: 80vw;
+  margin: auto;
+}
+
+div .MuiButtonGroup-root {
+  height: 3vw;
+}
+
+div .MuiButtonGroup-root button:first-of-type {
+  background-color: blue;
+  color: white;
+}
+
+div .MuiButtonGroup-root button:last-of-type {
+  background-color: red;
+  color: white;
+}
