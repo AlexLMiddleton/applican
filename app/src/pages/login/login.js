@@ -25,7 +25,10 @@ const Login = () => {
   const submit = e => {
     e.preventDefault();
     axios
-      .post("/api/login", login)
+      .post("/api/login", {
+        username: login.username,
+        password: login.password
+      })
       .then(() => dispatch(setUserLevel()))
       .then(() => {
         history.push("/");
@@ -78,7 +81,7 @@ const Login = () => {
             variant="contained"
             size="small"
             color="primary"
-            onClick={submit}
+            onSubmit={submit}
           >
             Submit
           </Button>

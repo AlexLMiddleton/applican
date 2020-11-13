@@ -13,15 +13,18 @@ import "./homepage.css";
 
 const UserHomepage = () => {
   const [user, setUser] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const userType = useSelector(state => state.users.userType);
 
   useEffect(() => {
+    setLoading(true);
     axios
       .get(`/api/applicant/${userType.id}`)
       .then(res => setUser(res.data[0]))
+      .then(setLoading(false))
       .catch(err => console.log(err));
-  }, []);
+  }, [loading]);
 
   console.log("userType", userType);
 
@@ -30,39 +33,45 @@ const UserHomepage = () => {
   return (
     <div>
       <h1>AppliCAN</h1>
-      <div className="homepage-options">
-        <Link to="/positions">
-          <Paper elevation={3}>
-            <ListAltSharpIcon color={"primary"} />
-            <br />
-            View All Open Positions
-          </Paper>
-        </Link>
-        <Link to={`/applicant/positions/${userType.id}`}>
-          <Paper elevation={3}>
-            <NetworkCheckSharpIcon color={"primary"} />
-            <br />
-            View Application Status
-          </Paper>
-        </Link>
-        {user.id ? (
-          <Link to={`/applicant/edit/${userType.id}`}>
+      {!loading ? (
+        <div className="homepage-options">
+          <Link to="/positions">
             <Paper elevation={3}>
-              <BuildSharpIcon color={"primary"} />
+              <ListAltSharpIcon color={"primary"} />
               <br />
-              Update Application
+              View All Open Positions
             </Paper>
           </Link>
-        ) : (
-          <Link to={`/new-application`}>
+          <Link to={`/applicant/positions/${userType.id}`}>
             <Paper elevation={3}>
-              <AddSharpIcon color={"primary"} />
+              <NetworkCheckSharpIcon color={"primary"} />
               <br />
-              Create a New Application
+              View Application Status
             </Paper>
           </Link>
-        )}
-      </div>
+          {user.id ? (
+            <Link to={`/applicant/edit/${userType.id}`}>
+              <Paper elevation={3}>
+                <BuildSharpIcon color={"primary"} />
+                <br />
+                Update Application
+              </Paper>
+            </Link>
+          ) : (
+            <Link to={`/new-application`}>
+              <Paper elevation={3}>
+                <AddSharpIcon color={"primary"} />
+                <br />
+                Create a New Application
+              </Paper>
+            </Link>
+          )}
+        </div>
+      ) : (
+        <div>
+          <h1>Still loading...</h1>
+        </div>
+      )}
     </div>
   );
 };

@@ -1,4 +1,6 @@
 const authorizeAll = (req, res, next) => {
+  console.log("req.params.id ", req.params.id);
+  console.log("req.user.level ", req.user.level);
   if (
     (req.user.id == req.params.id && req.user.level === "user") ||
     req.user.level === "technician" ||

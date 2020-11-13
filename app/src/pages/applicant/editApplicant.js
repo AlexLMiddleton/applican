@@ -8,6 +8,11 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Select from "@material-ui/core/Select";
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 const EditApplicant = () => {
   const { id } = useParams();
@@ -21,6 +26,7 @@ const EditApplicant = () => {
   const [education, setEducation] = useState([]);
   const [loading, setLoading] = useState(true);
   const [submitted, setSubmitted] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
     setLoading(true);
@@ -34,12 +40,14 @@ const EditApplicant = () => {
     ]);
   }, [submitted]);
 
-  const editedPosts = education.filter(ed => ed.id);
-  const addedPosts = education.filter(ed => !ed.id);
+  const editedPosts = education.filter(
+    ed => ed.id && ed.university && ed.degree
+  );
+  const addedPosts = education.filter(
+    ed => !ed.id && ed.university && ed.degree
+  );
+  const incompletePosts = education.filter(ed => !ed.university || !ed.degree);
 
-  console.log("Edited Posts:", editedPosts);
-  console.log("Added Posts", addedPosts);
-  console.log("Submitted status: ", submitted);
   const submit = e => {
     e.preventDefault();
     axios.all([
@@ -53,6 +61,7 @@ const EditApplicant = () => {
         withCredentials: true
       })
     ]);
+    setOpen(true);
     setSubmitted(true);
   };
 
@@ -60,6 +69,10 @@ const EditApplicant = () => {
     const values = [...education];
     values[index][event.target.name] = event.target.value;
     setEducation(values);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const addEducationFields = () => {
@@ -184,7 +197,7 @@ const EditApplicant = () => {
                 )}
                 <TextField
                   variant="outlined"
-                  label="College or university name"
+                  label="School name"
                   id="universityField"
                   type="text"
                   name="university"
@@ -295,6 +308,32 @@ const EditApplicant = () => {
         >
           Delete Application
         </Button>
+      </div>
+      <div>
+        <Dialog
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">
+            {incompletePosts
+              ? "There was a problem with your request"
+              : "Application update submitted"}
+          </DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {incompletePosts
+                ? "One or more of your education entries was incomplete and could not be added.  All entries must contain a school name and degree level."
+                : "Your changes have been submitted."}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions style={{ justifyContent: "center" }}>
+            <Button onClick={handleClose} color="primary" variant="outlined">
+              Acknowledge
+            </Button>
+          </DialogActions>
+        </Dialog>
       </div>
     </div>
   );

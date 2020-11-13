@@ -136,7 +136,7 @@ const CreateApplicant = () => {
               <h2>Education Entry #{index + 1}</h2>
               <TextField
                 variant="outlined"
-                label="College or university name"
+                label="School name"
                 id="universityField"
                 type="text"
                 name="university"

@@ -9,22 +9,27 @@ import "./applicant-positions.css";
 
 const ApplicantPositions = () => {
   const [positions, setPositions] = useState([]);
-
+  const [acceptInterviewToggle, setAcceptInterviewToggle] = useState(false);
+  const [rejectInterviewToggle, setRejectInterviewToggle] = useState(false);
   const { id } = useParams();
 
   const acceptInterview = interview => {
-    axios.put(`/api/applicant-positions/accept`, interview);
+    axios
+      .put(`/api/applicant-positions/accept`, interview)
+      .then(setAcceptInterviewToggle(interview => !interview));
   };
 
   const rejectInterview = interview => {
-    axios.put(`/api/applicant-positions/reject`, interview);
+    axios
+      .put(`/api/applicant-positions/reject`, interview)
+      .then(setRejectInterviewToggle(interview => !interview));
   };
 
   useEffect(() => {
     axios
       .get(`/api/applicant-positions/${id}`)
       .then(res => setPositions(res.data));
-  }, [acceptInterview, rejectInterview]);
+  }, [rejectInterviewToggle, acceptInterviewToggle]);
 
   return (
     <div>
@@ -89,6 +94,8 @@ const ApplicantPositions = () => {
                     <span style={{ color: "blue" }}>
                       cleared, awaiting interview scheduling
                     </span>
+                  ) : pos.status === "open" ? (
+                    <span>position still open</span>
                   ) : (
                     <span>declined</span>
                   )}
