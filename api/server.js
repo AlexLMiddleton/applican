@@ -1,14 +1,6 @@
 require("dotenv").config();
 const express = require("express");
 
-// const authenticateToken = require("./auth/authenticateToken");
-// const {
-//   authorizeAll,
-//   authorizeUser,
-//   authorizeTechnician,
-//   authorizeAdministrator
-// } = require("./auth/authorizeLevel");
-
 const applicantRouter = require("./routes/applicant.js");
 const applicantsRouter = require("./routes/applicants.js");
 const applicantPositionsRouter = require("./routes/applicantPositions.js");
