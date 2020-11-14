@@ -15,7 +15,7 @@ const Signup = () => {
 
   const submit = e => {
     e.preventDefault();
-    axios.post("/api/signup", signup);
+    axios.post("/api/user/signup", signup);
   };
   return (
     <div className="wrapper">

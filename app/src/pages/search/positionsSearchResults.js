@@ -13,7 +13,7 @@ const SearchPositions = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/api/xyz?search=${searchTerm}`)
+      .get(`/api/search/positions?search=${searchTerm}`)
       .then(res => setResults(...results, res.data))
       .then(setLoading(false));
   }, []);

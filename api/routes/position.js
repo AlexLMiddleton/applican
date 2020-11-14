@@ -82,4 +82,17 @@ positionRouter.delete("/:id", (req, res) => {
   });
 });
 
+// Get a position description for a given position
+positionRouter.get("/description/:id", (req, res) => {
+  position = [req.params.id];
+  let sql = "SELECT * FROM position_description WHERE position=?";
+  con.query(sql, position, (err, result) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(result);
+    }
+  });
+});
+
 module.exports = positionRouter;

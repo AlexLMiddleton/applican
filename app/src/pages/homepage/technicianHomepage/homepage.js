@@ -42,6 +42,14 @@ const TechnicianHomepage = () => {
             Review Closed Position Postings
           </Paper>
         </Link>
+        {/* <br />
+        <Link to="/applicants">
+          <Paper elevation={3}>
+            <LockSharpIcon color={"primary"} />
+            <br />
+            View All Applicants
+          </Paper>
+        </Link> */}
       </div>
     </div>
   );

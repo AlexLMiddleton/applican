@@ -13,7 +13,7 @@ const SearchApplicants = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`/api/yyz?search=${searchTerm}`)
+      .get(`/api/search/applicants?search=${searchTerm}`)
       .then(res => setResults(...results, res.data))
       .then(setLoading(false));
   }, []);

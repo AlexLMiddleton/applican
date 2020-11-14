@@ -23,7 +23,7 @@ export const fetchPosition = id => async (dispatch, getState) => {
 };
 
 export const fetchPositionDescription = id => async (dispatch, getState) => {
-  const res = await axios.get(`/api/position_desc/${id}`);
+  const res = await axios.get(`/api/position/description/${id}`);
 
   dispatch({
     type: FETCH_POSITION_DESCRIPTION,

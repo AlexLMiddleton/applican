@@ -13,7 +13,7 @@ const Users = () => {
 
   useEffect(() => {
     axios.get("/api/users").then(res => setUsers(res.data));
-    axios.get("/api/user-roles").then(res => setRoles(res.data));
+    axios.get("/api/users/roles").then(res => setRoles(res.data));
   }, []);
 
   const submitLevel = () => {

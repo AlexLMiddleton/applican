@@ -33,7 +33,10 @@ const ClosedUnfilledPositions = () => {
                     color="primary"
                     style={{ width: "40%" }}
                   >
-                    <Link to={`/position/applicants/${position.id}`}>
+                    <Link
+                      to={`/position/applicants/${position.id}`}
+                      style={{ color: "white" }}
+                    >
                       View All Applicants
                     </Link>
                   </Button>{" "}
@@ -44,7 +47,10 @@ const ClosedUnfilledPositions = () => {
                     color="secondary"
                     style={{ width: "40%" }}
                   >
-                    <Link to={`/position/cleared-for-interview/${position.id}`}>
+                    <Link
+                      to={`/position/cleared-for-interview/${position.id}`}
+                      style={{ color: "white" }}
+                    >
                       View Cleared Applicants
                     </Link>
                   </Button>
