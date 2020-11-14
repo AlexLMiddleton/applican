@@ -1,15 +1,13 @@
 require("dotenv").config();
 const express = require("express");
-const cors = require("cors");
-const mysql = require("mysql");
 
-const authenticateToken = require("./auth/authenticateToken");
-const {
-  authorizeAll,
-  authorizeUser,
-  authorizeTechnician,
-  authorizeAdministrator
-} = require("./auth/authorizeLevel");
+// const authenticateToken = require("./auth/authenticateToken");
+// const {
+//   authorizeAll,
+//   authorizeUser,
+//   authorizeTechnician,
+//   authorizeAdministrator
+// } = require("./auth/authorizeLevel");
 
 const applicantRouter = require("./routes/applicant.js");
 const applicantsRouter = require("./routes/applicants.js");
@@ -34,15 +32,6 @@ app.use("/api/position-applicants", positionApplicantsRouter);
 app.use("/api/search", searchRouter);
 app.use("/api/user", userRouter);
 app.use("/api/users", usersRouter);
-
-const con = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
-  dateStrings: true
-});
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
