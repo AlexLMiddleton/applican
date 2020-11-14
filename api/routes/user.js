@@ -1,8 +1,8 @@
 const express = require("express");
 const userRouter = express.Router();
-const mysql = require("mysql");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const con = require("../connection/connection");
 
 const authenticateToken = require("../auth/authenticateToken");
 const {
@@ -11,15 +11,6 @@ const {
   authorizeTechnician,
   authorizeAdministrator
 } = require("../auth/authorizeLevel");
-
-const con = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_DATABASE,
-  port: process.env.DB_PORT,
-  dateStrings: true
-});
 
 // Sign up as a new user
 userRouter.post("/signup", async (req, res) => {
