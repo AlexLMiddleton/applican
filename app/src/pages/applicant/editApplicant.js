@@ -176,7 +176,7 @@ const EditApplicant = () => {
             <br />
             <hr />
             {education.map((ed, index) => (
-              <div key={ed.id}>
+              <div key={index}>
                 <h2>Education Entry #{index + 1}</h2>
                 {ed.id ? (
                   <>
@@ -317,13 +317,13 @@ const EditApplicant = () => {
           aria-describedby="alert-dialog-description"
         >
           <DialogTitle id="alert-dialog-title">
-            {incompletePosts
+            {incompletePosts.length > 0
               ? "There was a problem with your request"
               : "Application update submitted"}
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
-              {incompletePosts
+              {incompletePosts.length > 0
                 ? "One or more of your education entries was incomplete and could not be added.  All entries must contain a school name and degree level."
                 : "Your changes have been submitted."}
             </DialogContentText>
