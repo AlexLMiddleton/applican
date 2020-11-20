@@ -107,7 +107,7 @@ const EditApplicant = () => {
 
   return (
     <div>
-      <div className="container">
+      <div className="editApplicantContainer">
         <h1>Edit Profile</h1>
         <p>
           Once complete, click "Update Application" near the bottom of the form.
@@ -183,9 +183,13 @@ const EditApplicant = () => {
                     <Button
                       variant="contained"
                       size="small"
-                      color="primary"
+                      color="warning"
                       onClick={() => deleteEducation(ed.id)}
-                      style={{ width: "20%" }}
+                      style={{
+                        width: "20%",
+                        backgroundColor: "red",
+                        color: "white"
+                      }}
                     >
                       delete
                     </Button>
@@ -219,31 +223,32 @@ const EditApplicant = () => {
                     type="text"
                     name="degree"
                     value={ed.degree}
+                    style={{ textAlign: "left" }}
                     onChange={event => handleChangeInput(index, event)}
                   >
                     <MenuItem value="">
-                      <em>None</em>
+                      <span>None</span>
                     </MenuItem>
                     <MenuItem value="High School Diploma">
-                      <em>High School Diploma</em>
+                      <span>High School Diploma</span>
                     </MenuItem>
                     <MenuItem value="Some College">
-                      <em>Some College</em>
+                      <span>Some College</span>
                     </MenuItem>
                     <MenuItem value="Associates">
-                      <em>Associates</em>
+                      <span>Associates</span>
                     </MenuItem>
                     <MenuItem value="Bachelors">
-                      <em>Bachelors</em>
+                      <span>Bachelors</span>
                     </MenuItem>
                     <MenuItem value="Masters">
-                      <em>Masters</em>
+                      <span>Masters</span>
                     </MenuItem>
                     <MenuItem value="Specialist">
-                      <em>Specialist</em>
+                      <span>Specialist</span>
                     </MenuItem>
                     <MenuItem value="Doctorate">
-                      <em>Doctorate</em>
+                      <span>Doctorate</span>
                     </MenuItem>
                   </Select>
                 </FormControl>
@@ -293,7 +298,7 @@ const EditApplicant = () => {
               size="small"
               color="primary"
             >
-              Update Application
+              Save Updated Application
             </Button>
           </form>
         ) : (

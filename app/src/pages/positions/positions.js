@@ -1,35 +1,92 @@
 import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+import Button from "@material-ui/core/Button";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormLabel from "@material-ui/core/FormLabel";
+import FormControl from "@material-ui/core/FormControl";
+
 import PositionRow from "../../components/positions/positionRow";
-import { fetchPositions } from "../../actions/positionsActions";
 import SearchPositionsInput from "../../components/search/searchPositionsInput";
 
 import "./positions.css";
 
 const Positions = () => {
-  const [positionsFetched, setPositionsFetched] = useState(false);
-  const positions = useSelector(state => state.positions.positions[0]);
-  const dispatch = useDispatch();
+  const [positionsFetched, setPositionsFetched] = useState([]);
+  const [departmentsFetched, setDepartmentsFetched] = useState([]);
+  const [departmentSelected, setDepartmentSelected] = useState([]);
 
   useEffect(() => {
-    dispatch(fetchPositions());
+    axios.get("/api/positions").then(res => setPositionsFetched(res.data));
+    axios
+      .get(`/api/positions/department_names`)
+      .then(res => setDepartmentsFetched(res.data));
   }, []);
 
+  const handleChange = event => {
+    setDepartmentSelected([...departmentSelected, event.target.name]);
+  };
+
+  const submit = () => {
+    axios
+      .get(`/api/positions/filtered_positions`, { params: departmentSelected })
+      .then(res => setPositionsFetched(res.data))
+      .catch(err => console.log(err));
+  };
+
+  console.log("Departments Fetched: ", departmentsFetched);
+  console.log("Departments Selected: ", departmentSelected);
+
   return (
-    <div className="positionsContainer">
+    <div className="outermostPositionsContainer">
       <h1>Position Listing</h1>
       <SearchPositionsInput />
-      {positions &&
-        positions.map(position => (
-          <PositionRow
-            key={position.id}
-            id={position.id}
-            title={position.title}
-            department={position.department}
-            salary={position.salary}
-            closing_date={position.closing_date.split("T")[0]}
-          />
-        ))}
+      <div className="outerPositionsContainer">
+        <div className="innerPositionsContainer">
+          {positionsFetched &&
+            positionsFetched.map(position => (
+              <PositionRow
+                key={position.id}
+                id={position.id}
+                title={position.title}
+                department={position.department}
+                salary={position.salary}
+                closing_date={position.closing_date.split("T")[0]}
+              />
+            ))}
+        </div>
+        <div className="positionFilterSidebar">
+          <FormControl component="fieldset">
+            <FormLabel component="legend">Select department(s):</FormLabel>
+            <FormGroup>
+              {departmentsFetched &&
+                departmentsFetched.map((department, index) => (
+                  <FormControlLabel
+                    key={index}
+                    control={
+                      <Checkbox
+                        onChange={handleChange}
+                        name={department.department}
+                        color="primary"
+                      />
+                    }
+                    label={department.department}
+                  />
+                ))}
+            </FormGroup>
+          </FormControl>
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            color="primary"
+            onClick={submit}
+          >
+            Search
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -25,44 +25,45 @@ const PositionApplicants = () => {
     setSubmitted(!submitted);
   };
 
+  console.log("applicants", applicants);
+
   return (
     <div>
       <h1>Applicants for Job #{id}</h1>
-      {applicants &&
-        applicants.map(applicant => (
-          <Paper
-            className="position-applicant-wrapper"
-            elevation={3}
-            key={applicant.id}
-          >
-            <Link to={`/applicant/${applicant.id}`}>
-              <h1 key={applicant.id}>{applicant.full_name}</h1>
-            </Link>
-            <h3>{applicant.street_address}</h3>
-            <h3>
-              {applicant.city}, {applicant.state} {applicant.zip}
-            </h3>
-            <p>
-              Status:{" "}
-              {applicant.cleared_for_interview === 0 ? (
-                <span>Uncleared</span>
-              ) : (
-                <span style={{ color: "green" }}>Cleared for Interview</span>
-              )}
-            </p>
-            <Button
-              type="submit"
-              variant="contained"
-              size="small"
-              color="primary"
-              onClick={() => {
-                toggleInterviewStatus(applicant.applicant_id);
-              }}
+      <div className="applicantGrid">
+        {applicants &&
+          applicants.map(applicant => (
+            <Paper
+              className="position-applicant-wrapper"
+              elevation={3}
+              square
+              key={applicant.id}
             >
-              Toggle Interview Status
-            </Button>
-          </Paper>
-        ))}
+              <Link to={`/applicant/${applicant.applicant_id}`}>
+                <h1 key={applicant.applicant_id}>{applicant.full_name}</h1>
+              </Link>
+              <p>
+                Status:{" "}
+                {applicant.cleared_for_interview === 0 ? (
+                  <span>Uncleared</span>
+                ) : (
+                  <span style={{ color: "green" }}>Cleared for Interview</span>
+                )}
+              </p>
+              <Button
+                type="submit"
+                variant="contained"
+                size="small"
+                color="primary"
+                onClick={() => {
+                  toggleInterviewStatus(applicant.applicant_id);
+                }}
+              >
+                Toggle Interview Status
+              </Button>
+            </Paper>
+          ))}
+      </div>
     </div>
   );
 };

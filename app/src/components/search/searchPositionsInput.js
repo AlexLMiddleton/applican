@@ -17,9 +17,7 @@ const SearchPositionsInput = props => {
           onChange={e => setSearchTerm(e.target.value)}
           style={{ width: "25%" }}
         />
-        {/* <input name="search" onChange={e => setSearchTerm(e.target.value)} /> */}
         <Link to={`/position/search/${searchTerm}`}>
-          {/* <button type="submit">Search</button> */}
           <Button
             type="submit"
             variant="contained"

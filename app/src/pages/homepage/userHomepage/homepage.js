@@ -36,14 +36,14 @@ const UserHomepage = () => {
       {!loading ? (
         <div className="homepage-options">
           <Link to="/positions">
-            <Paper elevation={3}>
+            <Paper elevation={3} square>
               <ListAltSharpIcon color={"primary"} />
               <br />
               View All Open Positions
             </Paper>
           </Link>
           <Link to={`/applicant/positions/${userType.id}`}>
-            <Paper elevation={3}>
+            <Paper elevation={3} square>
               <NetworkCheckSharpIcon color={"primary"} />
               <br />
               View Application Status
@@ -51,7 +51,7 @@ const UserHomepage = () => {
           </Link>
           {user.id ? (
             <Link to={`/applicant/edit/${userType.id}`}>
-              <Paper elevation={3}>
+              <Paper elevation={3} square>
                 <BuildSharpIcon color={"primary"} />
                 <br />
                 Update Application
@@ -59,7 +59,7 @@ const UserHomepage = () => {
             </Link>
           ) : (
             <Link to={`/new-application`}>
-              <Paper elevation={3}>
+              <Paper elevation={3} square>
                 <AddSharpIcon color={"primary"} />
                 <br />
                 Create a New Application

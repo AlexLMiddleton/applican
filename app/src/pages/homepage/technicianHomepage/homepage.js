@@ -15,28 +15,28 @@ const TechnicianHomepage = () => {
       <h2>Technician Dashboard</h2>
       <div className="homepage-options">
         <Link to="/positions">
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <ListAltSharpIcon color={"primary"} />
             <br />
             View Current Positions
           </Paper>
         </Link>
         <Link to="/new-position">
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <LibraryAddSharpIcon color={"primary"} />
             <br />
             Post New Position
           </Paper>
         </Link>
         <Link to="/positions/unfilled">
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <PersonAddSharpIcon color={"primary"} />
             <br />
             Screen Applicants
           </Paper>
         </Link>
         <Link to="/positions/filled">
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <LockSharpIcon color={"primary"} />
             <br />
             Review Closed Position Postings

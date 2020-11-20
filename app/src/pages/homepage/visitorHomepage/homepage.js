@@ -32,21 +32,21 @@ const VisitorHomepage = () => {
       <h2>... the user-friendly applicant tracking system</h2>
       <div className="homepage-options">
         <Link to="/positions">
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <ListAltSharpIcon color={"primary"} />
             <br />
             View All Open Positions
           </Paper>
         </Link>
         <Link to={`/login`}>
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <LockOpenSharpIcon color={"primary"} />
             <br />
             Log In
           </Paper>
         </Link>
         <Link to={`/signup`}>
-          <Paper elevation={3}>
+          <Paper elevation={3} square>
             <CreateSharpIcon color={"primary"} />
             <br />
             Sign Up

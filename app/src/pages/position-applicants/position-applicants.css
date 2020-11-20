@@ -1,3 +1,10 @@
+.applicantGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+  grid-gap: 8% 2%;
+  padding: 0 2%;
+}
+
 .position-applicant-wrapper {
-  padding: 0.25% 0 1.5% 0;
+  padding: 0.25% 0 2.5% 0;
 }

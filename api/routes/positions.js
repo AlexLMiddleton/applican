@@ -81,4 +81,30 @@ positionsRouter.post(
   }
 );
 
+// Get department names with open positions
+positionsRouter.get("/department_names", (req, res) => {
+  let sql = `SELECT DISTINCT department FROM positions_main WHERE status='open' ORDER BY department`;
+  con.query(sql, (error, result) => {
+    if (error) {
+      return res.send(error);
+    } else {
+      return res.json(result);
+    }
+  });
+});
+
+// Get jobs in user-specified departments
+positionsRouter.get("/filtered_positions", (req, res) => {
+  const filters = req.query;
+  const values = Object.values(filters);
+  let sql = `SELECT * FROM positions_main WHERE department IN (?) and status = 'open';`;
+  con.query(sql, [values], (error, result) => {
+    if (error) {
+      return res.send(error);
+    } else {
+      return res.json(result);
+    }
+  });
+});
+
 module.exports = positionsRouter;
