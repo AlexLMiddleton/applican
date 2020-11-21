@@ -17,7 +17,14 @@ applicantPositionsRouter.get(
   authorizeAll,
   (req, res) => {
     let applicant = req.user.id;
-    let sql = `SELECT * FROM applicant_main 
+    let sql = `SELECT applicant_main.id as id, applicant_positions.position_id as position_id, 
+    applicant_positions.cleared_for_interview as cleared_for_interview, 
+    applicant_positions.cleared_for_hire as cleared_for_hire, positions_main.title as title, 
+    positions_main.department as department, positions_main.closing_date as closing_date, 
+    positions_main.salary as salary, positions_main.status as status, 
+    positions_main.filled as filled, interviews.interview_date as interview_date, 
+    interviews.accepted as accepted
+     FROM applicant_main 
       INNER JOIN applicant_positions ON applicant_main.id = applicant_positions.applicant_id 
       INNER JOIN positions_main ON applicant_positions.position_id = positions_main.id 
       LEFT JOIN interviews ON applicant_positions.applicant_id = interviews.applicant_id 

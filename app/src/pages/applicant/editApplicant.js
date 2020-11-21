@@ -324,6 +324,8 @@ const EditApplicant = () => {
             >
               Save Updated Application
             </Button>
+            <br />
+            <br />
           </form>
         ) : (
           <h1>Loading...</h1>
