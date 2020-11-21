@@ -28,37 +28,23 @@ const Positions = () => {
     setDepartmentSelected([...departmentSelected, event.target.name]);
   };
 
-  const submit = () => {
+  const submit = e => {
+    e.preventDefault();
     axios
       .get(`/api/positions/filtered_positions`, { params: departmentSelected })
       .then(res => setPositionsFetched(res.data))
       .catch(err => console.log(err));
   };
 
-  console.log("Departments Fetched: ", departmentsFetched);
-  console.log("Departments Selected: ", departmentSelected);
-
   return (
     <div className="outermostPositionsContainer">
       <h1>Position Listing</h1>
       <SearchPositionsInput />
       <div className="outerPositionsContainer">
-        <div className="innerPositionsContainer">
-          {positionsFetched &&
-            positionsFetched.map(position => (
-              <PositionRow
-                key={position.id}
-                id={position.id}
-                title={position.title}
-                department={position.department}
-                salary={position.salary}
-                closing_date={position.closing_date.split("T")[0]}
-              />
-            ))}
-        </div>
         <div className="positionFilterSidebar">
           <FormControl component="fieldset">
-            <FormLabel component="legend">Select department(s):</FormLabel>
+            <FormLabel component="legend">Filter by department(s):</FormLabel>
+            <hr />
             <FormGroup>
               {departmentsFetched &&
                 departmentsFetched.map((department, index) => (
@@ -79,12 +65,25 @@ const Positions = () => {
           <Button
             type="submit"
             variant="contained"
-            size="small"
+            size="large"
             color="primary"
             onClick={submit}
           >
             Search
           </Button>
+        </div>
+        <div className="innerPositionsContainer">
+          {positionsFetched &&
+            positionsFetched.map(position => (
+              <PositionRow
+                key={position.id}
+                id={position.id}
+                title={position.title}
+                department={position.department}
+                salary={position.salary}
+                closing_date={position.closing_date.split("T")[0]}
+              />
+            ))}
         </div>
       </div>
     </div>

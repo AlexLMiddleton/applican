@@ -50,22 +50,29 @@ const EditApplicant = () => {
 
   const submit = e => {
     e.preventDefault();
-    axios.all([
-      axios.put("/api/applicants", user, {
-        withCredentials: true
-      }),
-      axios.put("/api/applicants/education", editedPosts, {
-        withCredentials: true
-      }),
-      axios.post("/api/applicants/education", addedPosts, {
-        withCredentials: true
-      })
-    ]);
-    setOpen(true);
-    setSubmitted(true);
+    if (incompletePosts.length > 0) {
+      setOpen(true);
+    } else {
+      axios.all([
+        axios.put(`/api/applicant/${id}`, user, {
+          withCredentials: true
+        }),
+        axios.put("/api/applicants/education", editedPosts, {
+          withCredentials: true
+        }),
+        axios.post("/api/applicants/education", addedPosts, {
+          withCredentials: true
+        })
+      ]);
+      setOpen(true);
+      setSubmitted(true);
+    }
   };
 
-  const handleChangeInput = (index, event) => {
+  const handleUserChangeInput = event =>
+    setUser({ ...user, [event.target.name]: [event.target.value] });
+
+  const handleEducationChangeInput = (index, event) => {
     const values = [...education];
     values[index][event.target.name] = event.target.value;
     setEducation(values);
@@ -87,14 +94,6 @@ const EditApplicant = () => {
     ]);
   };
 
-  const deleteApplicant = () => {
-    try {
-      axios.delete(`/api/applicant/${id}`);
-    } catch {
-      console.log("Delete failed!");
-    }
-  };
-
   const deleteEducation = education_id => {
     try {
       axios
@@ -104,6 +103,15 @@ const EditApplicant = () => {
       console.log("Education entry delete failed!");
     }
   };
+
+  const filterEducation = () => {
+    const filteredEducation = education.filter(
+      ed => ed.id && ed.university && ed.degree
+    );
+    setEducation(filteredEducation);
+  };
+
+  console.log("Incomplete posts: ", incompletePosts);
 
   return (
     <div>
@@ -121,7 +129,7 @@ const EditApplicant = () => {
               type="text"
               name="full_name"
               value={user.full_name}
-              onChange={handleChangeInput}
+              onChange={handleUserChangeInput}
               style={{ width: "80%" }}
             />
             <br />
@@ -133,7 +141,7 @@ const EditApplicant = () => {
               type="text"
               name="street_address"
               value={user.street_address}
-              onChange={handleChangeInput}
+              onChange={handleUserChangeInput}
               style={{ width: "80%" }}
             />
             <br />
@@ -145,7 +153,7 @@ const EditApplicant = () => {
               type="text"
               name="city"
               value={user.city}
-              onChange={handleChangeInput}
+              onChange={handleUserChangeInput}
               style={{ width: "80%" }}
             />
             <br />
@@ -157,7 +165,7 @@ const EditApplicant = () => {
               type="text"
               name="state"
               value={user.state}
-              onChange={handleChangeInput}
+              onChange={handleUserChangeInput}
               style={{ width: "80%" }}
             />
             <br />
@@ -169,7 +177,7 @@ const EditApplicant = () => {
               type="text"
               name="zip"
               value={user.zip}
-              onChange={handleChangeInput}
+              onChange={handleUserChangeInput}
               style={{ width: "80%" }}
             />
             <br />
@@ -183,12 +191,12 @@ const EditApplicant = () => {
                     <Button
                       variant="contained"
                       size="small"
-                      color="warning"
                       onClick={() => deleteEducation(ed.id)}
                       style={{
                         width: "20%",
                         backgroundColor: "red",
-                        color: "white"
+                        color: "white",
+                        backgroundColor: "red"
                       }}
                     >
                       delete
@@ -197,7 +205,23 @@ const EditApplicant = () => {
                     <br />
                   </>
                 ) : (
-                  ""
+                  <>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => filterEducation()}
+                      style={{
+                        width: "20%",
+                        backgroundColor: "red",
+                        color: "white",
+                        backgroundColor: "red"
+                      }}
+                    >
+                      delete
+                    </Button>
+                    <br />
+                    <br />
+                  </>
                 )}
                 <TextField
                   variant="outlined"
@@ -207,7 +231,7 @@ const EditApplicant = () => {
                   name="university"
                   value={ed.university}
                   style={{ width: "80%" }}
-                  onChange={event => handleChangeInput(index, event)}
+                  onChange={event => handleEducationChangeInput(index, event)}
                 />
                 <br />
                 <br />
@@ -224,7 +248,7 @@ const EditApplicant = () => {
                     name="degree"
                     value={ed.degree}
                     style={{ textAlign: "left" }}
-                    onChange={event => handleChangeInput(index, event)}
+                    onChange={event => handleEducationChangeInput(index, event)}
                   >
                     <MenuItem value="">
                       <span>None</span>
@@ -262,7 +286,7 @@ const EditApplicant = () => {
                   name="major"
                   value={ed.major}
                   style={{ width: "80%" }}
-                  onChange={event => handleChangeInput(index, event)}
+                  onChange={event => handleEducationChangeInput(index, event)}
                 />
                 <br />
                 <br />
@@ -275,7 +299,7 @@ const EditApplicant = () => {
                   value={ed.graduated}
                   style={{ width: "80%" }}
                   InputLabelProps={{ shrink: true }}
-                  onChange={event => handleChangeInput(index, event)}
+                  onChange={event => handleEducationChangeInput(index, event)}
                 />
                 <br />
                 <br />
@@ -285,7 +309,7 @@ const EditApplicant = () => {
             <Button
               variant="contained"
               size="small"
-              color="primary"
+              color="secondary"
               onClick={() => addEducationFields()}
             >
               Add Another Education Entry
@@ -304,15 +328,6 @@ const EditApplicant = () => {
         ) : (
           <h1>Loading...</h1>
         )}
-        <hr />
-        <Button
-          onClick={deleteApplicant}
-          variant="contained"
-          size="small"
-          color="secondary"
-        >
-          Delete Application
-        </Button>
       </div>
       <div>
         <Dialog

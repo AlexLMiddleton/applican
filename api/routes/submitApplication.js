@@ -12,7 +12,7 @@ const {
 
 // Submit an application for a position
 submitApplicationRouter.post(
-  "/api/submit-application/:id",
+  "/:id",
   authenticateToken,
   authorizeUser,
   (req, res) => {

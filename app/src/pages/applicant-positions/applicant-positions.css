@@ -1,4 +1,4 @@
-.position-container {
+div .position-container {
   display: grid;
   grid-template-columns: 37.5vw 37.5vw;
   grid-row: auto auto;
@@ -6,6 +6,10 @@
   grid-row-gap: 5%;
   width: 80vw;
   margin: auto;
+}
+
+.position-container .position-card .MuiPaper-root {
+  padding: 1% 0 3% 0;
 }
 
 div .MuiButtonGroup-root {

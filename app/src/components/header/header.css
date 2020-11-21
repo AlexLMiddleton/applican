@@ -1,3 +1,7 @@
+.headerLink {
+  color: white;
+}
+
 .headerLink:visited {
   color: white;
 }

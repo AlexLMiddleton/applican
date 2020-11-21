@@ -37,7 +37,7 @@ const ApplicantPositions = () => {
       <div className="position-container">
         {positions &&
           positions.map(pos => (
-            <div key={pos.id}>
+            <div key={pos.id} className="position-card">
               <Paper elevation={3} square>
                 <Link to={`/position/${pos.position_id}`}>
                   <h1>{pos.title}</h1>

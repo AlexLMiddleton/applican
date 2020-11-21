@@ -8,7 +8,7 @@ import "./positionRow.css";
 const PositionRow = props => {
   return (
     <div className="positionRowContainer">
-      <Paper elevation={3} key={props.id} className="positionRowItem">
+      <Paper elevation={3} key={props.id}>
         <Link to={`/position/${props.id}`}>
           <h1>{props.title}</h1>
         </Link>
