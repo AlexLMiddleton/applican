@@ -15,10 +15,8 @@ const SearchPositionsInput = props => {
           variant="outlined"
           name="search"
           onChange={props.onChange}
-          // onChange={props.onChange}
           style={{ width: "25%" }}
         />
-        {/* <Link to={`/position/search/${searchTerm}`}> */}
         <Button
           type="submit"
           variant="contained"
@@ -29,7 +27,6 @@ const SearchPositionsInput = props => {
         >
           Submit
         </Button>
-        {/* </Link> */}
       </form>
     </div>
   );

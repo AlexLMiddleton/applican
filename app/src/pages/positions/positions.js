@@ -63,12 +63,21 @@ const Positions = () => {
 
   const handleSearchSubmit = e => {
     e.preventDefault();
-    axios
-      .get(`/api/search/positions?search=${searchTerm}`)
-      .then(res => setPositionsFetched(res.data));
+    if (departmentSelected.length > 0) {
+      axios
+        .get(`/api/positions/filtered_positions`, {
+          params: departmentSelected
+        })
+        .then(res => setPositionsFetched(res.data))
+        .catch(err => console.log(err));
+    } else {
+      axios
+        .get(`/api/search/positions?search=${searchTerm}`)
+        .then(res => setPositionsFetched(res.data));
+    }
   };
 
-  console.log("Search Term: ", searchTerm);
+  console.log("Departments selected: ", departmentSelected);
 
   return (
     <div className="outermostPositionsContainer">
