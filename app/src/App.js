@@ -42,14 +42,14 @@ function App() {
         <Route path="/login" component={Login} />
         <Route exact path="/positions" component={Positions} />
         <Route exact path="/position/:id" component={Position} />
-        <Route
+        {/* <Route
           path="/applicant/search/:searchTerm"
           component={SearchApplicants}
         />
         <Route
           path="/position/search/:searchTerm"
           component={SearchPositions}
-        />
+        /> */}
 
         {/* User routes */}
         <UserRoute exact path="/new-application" component={CreateApplicant} />

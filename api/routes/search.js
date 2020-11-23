@@ -12,6 +12,7 @@ const {
 
 // Search for positions containing a term
 searchRouter.get("/positions", (req, res) => {
+  console.log(req.query.search);
   let sql = `SELECT * FROM positions_main WHERE title LIKE ?`;
   con.query(sql, ["%" + req.query.search + "%"], (err, result) => {
     if (err) {

@@ -16,6 +16,7 @@ const Positions = () => {
   const [positionsFetched, setPositionsFetched] = useState([]);
   const [departmentsFetched, setDepartmentsFetched] = useState([]);
   const [departmentSelected, setDepartmentSelected] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     axios.get("/api/positions").then(res => setPositionsFetched(res.data));
@@ -25,21 +26,57 @@ const Positions = () => {
   }, []);
 
   const handleChange = event => {
-    setDepartmentSelected([...departmentSelected, event.target.name]);
+    if (departmentSelected.indexOf(event.target.name) >= 0) {
+      const department = departmentSelected.filter(
+        dep => dep !== event.target.name
+      );
+      setDepartmentSelected(department);
+    } else {
+      setDepartmentSelected([...departmentSelected, event.target.name]);
+    }
   };
 
   const submit = e => {
     e.preventDefault();
-    axios
-      .get(`/api/positions/filtered_positions`, { params: departmentSelected })
-      .then(res => setPositionsFetched(res.data))
-      .catch(err => console.log(err));
+    if (departmentSelected.length === 0) {
+      const departments = departmentsFetched.map(dept => dept.department);
+      axios
+        .get(`/api/positions/filtered_positions`, {
+          params: departments
+        })
+        .then(res => setPositionsFetched(res.data))
+        .catch(err => console.log(err));
+    } else {
+      axios
+        .get(`/api/positions/filtered_positions`, {
+          params: departmentSelected
+        })
+        .then(res => setPositionsFetched(res.data))
+        .catch(err => console.log(err));
+    }
   };
+
+  const handleSearchInput = e => {
+    e.preventDefault();
+    setSearchTerm(e.target.value);
+  };
+
+  const handleSearchSubmit = e => {
+    e.preventDefault();
+    axios
+      .get(`/api/search/positions?search=${searchTerm}`)
+      .then(res => setPositionsFetched(res.data));
+  };
+
+  console.log("Search Term: ", searchTerm);
 
   return (
     <div className="outermostPositionsContainer">
       <h1>Position Listing</h1>
-      <SearchPositionsInput />
+      <SearchPositionsInput
+        onChange={handleSearchInput}
+        onClick={handleSearchSubmit}
+      />
       <div className="outerPositionsContainer">
         <div className="positionFilterSidebar">
           <FormControl component="fieldset">
@@ -73,7 +110,7 @@ const Positions = () => {
           </Button>
         </div>
         <div className="innerPositionsContainer">
-          {positionsFetched &&
+          {positionsFetched.length > 0 ? (
             positionsFetched.map(position => (
               <PositionRow
                 key={position.id}
@@ -83,7 +120,12 @@ const Positions = () => {
                 salary={position.salary}
                 closing_date={position.closing_date.split("T")[0]}
               />
-            ))}
+            ))
+          ) : (
+            <>
+              <h1>No results found.</h1>
+            </>
+          )}
         </div>
       </div>
     </div>

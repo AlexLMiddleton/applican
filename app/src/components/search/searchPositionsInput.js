@@ -14,20 +14,22 @@ const SearchPositionsInput = props => {
           label="Search position titles"
           variant="outlined"
           name="search"
-          onChange={e => setSearchTerm(e.target.value)}
+          onChange={props.onChange}
+          // onChange={props.onChange}
           style={{ width: "25%" }}
         />
-        <Link to={`/position/search/${searchTerm}`}>
-          <Button
-            type="submit"
-            variant="contained"
-            size="large"
-            color="primary"
-            style={{ marginTop: ".5%", marginLeft: ".5%" }}
-          >
-            Submit
-          </Button>
-        </Link>
+        {/* <Link to={`/position/search/${searchTerm}`}> */}
+        <Button
+          type="submit"
+          variant="contained"
+          size="large"
+          color="primary"
+          onClick={props.onClick}
+          style={{ marginTop: ".5%", marginLeft: ".5%" }}
+        >
+          Submit
+        </Button>
+        {/* </Link> */}
       </form>
     </div>
   );
