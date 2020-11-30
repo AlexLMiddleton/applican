@@ -19,9 +19,20 @@ const CreatePosition = () => {
   ]);
 
   const handleTaskChangeInput = (index, event) => {
-    const values = [...task];
-    values[index][event.target.name] = event.target.value;
-    setTask(values);
+    if (
+      !position.title ||
+      !position.department ||
+      !position.salary ||
+      !position.closing_date
+    ) {
+      alert(
+        "You must complete the position information section before continuing"
+      );
+    } else {
+      const values = [...task];
+      values[index][event.target.name] = event.target.value;
+      setTask(values);
+    }
   };
 
   const addTaskFields = e => {
@@ -36,7 +47,9 @@ const CreatePosition = () => {
 
   const submit = e => {
     e.preventDefault();
-    axios.post("/api/positions", [position, task]);
+    const filteredTask = task.filter(t => t.description);
+    setTask(filteredTask);
+    axios.post("/api/positions", [position, filteredTask]);
   };
 
   console.log("Position: ", position);
