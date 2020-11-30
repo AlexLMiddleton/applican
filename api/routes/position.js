@@ -86,4 +86,44 @@ positionRouter.get("/description/:id", (req, res) => {
   });
 });
 
+// Insert or Update a position description for a given position
+positionRouter.put(
+  "/description/:id",
+  authenticateToken,
+  authorizeTechnician,
+  (req, res) => {
+    position = [req.params.id];
+    const tasks = req.body;
+    const tasksArray = tasks.map(task => [position, Object.values(task)]);
+    console.log(tasksArray);
+    let sql = `INSERT INTO position_description (position, tasks) VALUES ? ON DUPLICATE KEY UPDATE position = VALUES(position), tasks = VALUES(tasks)`;
+    con.query(sql, [tasksArray], (err, result) => {
+      if (err) {
+        return res.send(err);
+      } else {
+        return res.json(result);
+      }
+    });
+  }
+);
+
+// Update an applicant's education
+// applicantsRouter.put(
+//   "/education",
+//   authenticateToken,
+//   authorizeUser,
+//   (req, res) => {
+//     const education = req.body;
+//     const educationArray = education.map(ed => Object.values(ed));
+//     let sql = `INSERT INTO applicant_education (id, applicant_id, university, degree, major, graduated) VALUES ? ON DUPLICATE KEY UPDATE id = VALUES(id), applicant_id = VALUES(applicant_id), university = VALUES(university), degree = VALUES(degree), major = VALUES(major), graduated = VALUES(graduated)`;
+//     con.query(sql, [educationArray], (err, result) => {
+//       if (err) {
+//         return res.send(err);
+//       } else {
+//         return res.send("Educational experience(s) added!");
+//       }
+//     });
+//   }
+// );
+
 module.exports = positionRouter;
