@@ -63,7 +63,7 @@ const Positions = () => {
 
   const handleSearchSubmit = e => {
     e.preventDefault();
-    if (departmentSelected.length > 0) {
+    if (departmentSelected.length > 0 && !searchTerm) {
       axios
         .get(`/api/positions/filtered_positions`, {
           params: departmentSelected
@@ -73,7 +73,8 @@ const Positions = () => {
     } else {
       axios
         .get(`/api/search/positions?search=${searchTerm}`)
-        .then(res => setPositionsFetched(res.data));
+        .then(res => setPositionsFetched(res.data))
+        .catch(err => console.log(err));
     }
   };
 

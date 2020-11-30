@@ -63,20 +63,52 @@ positionsRouter.post(
   authorizeTechnician,
   (req, res) => {
     const position = [
-      req.body.title,
-      req.body.department,
-      req.body.closing_date,
-      parseInt(req.body.salary)
+      req.body[0].title,
+      req.body[0].department,
+      req.body[0].closing_date,
+      parseInt(req.body[0].salary)
     ];
-    console.log(position);
-    let sql =
-      "INSERT INTO positions_main (title, department, closing_date, salary) VALUES (?, ?, ?, ?)";
-    con.query(sql, position, (err, result) => {
+
+    const tasks = req.body[1].map(task => Object.values(task));
+
+    con.beginTransaction(function(err) {
+      console.log("Transaction started...");
       if (err) {
-        return res.send(err);
-      } else {
-        return res.send("New position added!");
+        throw err;
       }
+      con.query(
+        `INSERT INTO positions_main (title, department, closing_date, salary) VALUES (?)`,
+        [position],
+        (error, result) => {
+          if (error) {
+            return con.rollback(function() {
+              throw error;
+            });
+          }
+          const userID = result.insertId;
+          const descriptionInfo = tasks.map(task => [userID, task]);
+          con.query(
+            `INSERT INTO position_description (position, tasks) VALUES ?`,
+            [descriptionInfo],
+            (error, result) => {
+              if (error) {
+                return con.rollback(function() {
+                  console.log("SQL Error: ", error.sql);
+                  console.log(error.sqlMessage);
+                  throw error;
+                });
+              }
+              con.commit(function(error) {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log("Success!");
+                }
+              });
+            }
+          );
+        }
+      );
     });
   }
 );

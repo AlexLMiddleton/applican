@@ -3,6 +3,8 @@ import axios from "axios";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
+import "./position.css";
+
 const CreatePosition = () => {
   const [position, setPosition] = useState({
     title: "",
@@ -10,14 +12,38 @@ const CreatePosition = () => {
     salary: "",
     closing_date: ""
   });
+  const [task, setTask] = useState([
+    {
+      description: ""
+    }
+  ]);
+
+  const handleTaskChangeInput = (index, event) => {
+    const values = [...task];
+    values[index][event.target.name] = event.target.value;
+    setTask(values);
+  };
+
+  const addTaskFields = e => {
+    e.preventDefault();
+    setTask([
+      ...task,
+      {
+        description: ""
+      }
+    ]);
+  };
 
   const submit = e => {
     e.preventDefault();
-    axios.post("/api/positions", position);
+    axios.post("/api/positions", [position, task]);
   };
 
+  console.log("Position: ", position);
+  console.log("Tasks: ", task);
+
   return (
-    <div className="wrapper">
+    <div className="createPositionWrapper">
       <div className="container">
         <h1>Create a New Job Posting</h1>
         <p>Enter new position information below.</p>
@@ -74,6 +100,38 @@ const CreatePosition = () => {
             }
           />
           <br />
+          <br />
+          <hr />
+          <h2>Job Description Items:</h2>
+          {task &&
+            task.map((t, index) => (
+              <div key={index}>
+                <br />
+                <TextField
+                  id="outlined-basic"
+                  variant="outlined"
+                  label="Item"
+                  type="text"
+                  name="description"
+                  value={t.description}
+                  style={{ width: "80%" }}
+                  onChange={event => handleTaskChangeInput(index, event)}
+                />
+                <br />
+                <br />
+                <hr />
+              </div>
+            ))}
+          <Button
+            type="submit"
+            variant="contained"
+            size="small"
+            color="secondary"
+            onClick={addTaskFields}
+          >
+            Add New Task
+          </Button>
+          <hr />
           <Button
             type="submit"
             variant="contained"
