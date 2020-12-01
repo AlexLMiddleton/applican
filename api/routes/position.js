@@ -94,9 +94,9 @@ positionRouter.put(
   (req, res) => {
     position = [req.params.id];
     const tasks = req.body;
-    const tasksArray = tasks.map(task => [position, Object.values(task)]);
+    const tasksArray = tasks.map(task => [position, task.tasks]);
     console.log(tasksArray);
-    let sql = `INSERT INTO position_description (position, tasks) VALUES ? ON DUPLICATE KEY UPDATE position = VALUES(position), tasks = VALUES(tasks)`;
+    let sql = `INSERT IGNORE INTO position_description (position, tasks) VALUES ? ON DUPLICATE KEY UPDATE position = VALUES(position), tasks = VALUES(tasks)`;
     con.query(sql, [tasksArray], (err, result) => {
       if (err) {
         return res.send(err);

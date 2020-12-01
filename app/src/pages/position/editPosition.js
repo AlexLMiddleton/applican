@@ -50,6 +50,8 @@ const EditPosition = () => {
     ]);
   };
 
+  console.log("Tasks ", task);
+
   const submit = e => {
     e.preventDefault();
     axios.all([
@@ -59,7 +61,7 @@ const EditPosition = () => {
   };
 
   const handleChange = e => {
-    setPosition([{ ...position[0], [e.target.name]: e.target.value }]);
+    setPosition({ ...position, [e.target.name]: e.target.value });
   };
 
   const deletePosition = e => {
@@ -136,8 +138,8 @@ const EditPosition = () => {
                       variant="outlined"
                       label="Item"
                       type="text"
-                      name="description"
-                      value={t.description}
+                      name="tasks"
+                      value={t.tasks}
                       style={{ width: "80%" }}
                       onChange={event => handleTaskChangeInput(index, event)}
                     />
