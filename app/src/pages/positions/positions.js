@@ -36,6 +36,11 @@ const Positions = () => {
     }
   };
 
+  const changeDateFormat = closingDate => {
+    const [yyyy, mm, dd] = closingDate.split(/-/g);
+    return `${mm}/${dd}/${yyyy}`;
+  };
+
   const submit = e => {
     e.preventDefault();
     if (departmentSelected.length === 0) {
@@ -128,7 +133,9 @@ const Positions = () => {
                 title={position.title}
                 department={position.department}
                 salary={position.salary}
-                closing_date={position.closing_date.split("T")[0]}
+                closing_date={changeDateFormat(
+                  position.closing_date.split("T")[0]
+                )}
               />
             ))
           ) : (

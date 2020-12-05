@@ -38,6 +38,8 @@ Technicians should be able to:
 - [x] Delete a position
 - [x] Manually close a position
 - [x] List all positions
+- [x] Add description items
+- [x] Delete description items
 - [x] View applicants for current positions
 - [x] Screen applicants for closed, unfilled positions
 - [x] Search positions
@@ -46,8 +48,6 @@ Technicians should be able to:
 - [x] Schedule interviews
 - [x] Remove applicants from Cleared for Interview stage
 - [x] Clear applicants for hire
-- [ ] Mark applicants as hired and transfer their application information into the personnel management system
-- [ ] Edit information within the personnel management system
 
 ### Administrators
 

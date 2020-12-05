@@ -76,7 +76,8 @@ positionRouter.delete("/:id", (req, res) => {
 // Get a position description for a given position
 positionRouter.get("/description/:id", (req, res) => {
   position = [req.params.id];
-  let sql = "SELECT * FROM position_description WHERE position=?";
+  let sql =
+    "SELECT * FROM position_description WHERE position=? ORDER BY task_order";
   con.query(sql, position, (err, result) => {
     if (err) {
       return res.send(err);
@@ -92,13 +93,18 @@ positionRouter.put(
   authenticateToken,
   authorizeTechnician,
   (req, res) => {
-    position = [req.params.id];
+    position = parseInt(req.params.id);
     const tasks = req.body;
-    const tasksArray = tasks.map(task => [position, task.tasks]);
-    console.log(tasksArray);
-    let sql = `INSERT IGNORE INTO position_description (position, tasks) VALUES ? ON DUPLICATE KEY UPDATE position = VALUES(position), tasks = VALUES(tasks)`;
+    tasks.filter(task => task.tasks && task.task_order);
+    const tasksArray = tasks.map(task => [
+      position,
+      task.tasks,
+      task.task_order
+    ]);
+    let sql = `INSERT IGNORE INTO position_description (position, tasks, task_order) VALUES ? ON DUPLICATE KEY UPDATE position = VALUES(position), tasks = VALUES(tasks), task_order = VALUES(task_order)`;
     con.query(sql, [tasksArray], (err, result) => {
       if (err) {
+        console.log(err.sql);
         return res.send(err);
       } else {
         return res.json(result);
@@ -107,23 +113,20 @@ positionRouter.put(
   }
 );
 
-// Update an applicant's education
-// applicantsRouter.put(
-//   "/education",
-//   authenticateToken,
-//   authorizeUser,
-//   (req, res) => {
-//     const education = req.body;
-//     const educationArray = education.map(ed => Object.values(ed));
-//     let sql = `INSERT INTO applicant_education (id, applicant_id, university, degree, major, graduated) VALUES ? ON DUPLICATE KEY UPDATE id = VALUES(id), applicant_id = VALUES(applicant_id), university = VALUES(university), degree = VALUES(degree), major = VALUES(major), graduated = VALUES(graduated)`;
-//     con.query(sql, [educationArray], (err, result) => {
-//       if (err) {
-//         return res.send(err);
-//       } else {
-//         return res.send("Educational experience(s) added!");
-//       }
-//     });
-//   }
-// );
+positionRouter.delete("/description/:position_id/:task_id", (req, res) => {
+  const position = [
+    parseInt(req.params.position_id),
+    parseInt(req.params.task_id)
+  ];
+  let sql =
+    "DELETE FROM position_description WHERE position = ? AND task_order = ?";
+  con.query(sql, position, (err, result) => {
+    if (err) {
+      return res.send(err);
+    } else {
+      return res.json(result);
+    }
+  });
+});
 
 module.exports = positionRouter;

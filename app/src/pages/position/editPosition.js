@@ -36,6 +36,7 @@ const EditPosition = () => {
     } else {
       const values = [...task];
       values[index][event.target.name] = event.target.value;
+      values[index]["task_order"] = index;
       setTask(values);
     }
   };
@@ -45,18 +46,22 @@ const EditPosition = () => {
     setTask([
       ...task,
       {
-        description: ""
+        tasks: "",
+        task_order: ""
       }
     ]);
   };
 
-  console.log("Tasks ", task);
+  const deleteTask = (position_id, task_id) => {
+    axios.delete(`/api/position/description/${position_id}/${task_id}`);
+  };
 
   const submit = e => {
     e.preventDefault();
+    const filteredTasks = task.filter(t => t.tasks);
     axios.all([
       axios.put(`/api/position/${id}`, position),
-      axios.put(`/api/position/description/${id}`, task)
+      axios.put(`/api/position/description/${id}`, filteredTasks)
     ]);
   };
 
@@ -68,8 +73,6 @@ const EditPosition = () => {
     e.preventDefault();
     axios.delete(`/api/position/${id}`);
   };
-
-  console.log("Position", position);
 
   return (
     <div className="createPositionWrapper">
@@ -132,6 +135,19 @@ const EditPosition = () => {
               {task &&
                 task.map((t, index) => (
                   <div key={index}>
+                    <Button
+                      variant="contained"
+                      size="small"
+                      onClick={() => deleteTask(t.position, t.task_order)}
+                      style={{
+                        width: "20%",
+                        backgroundColor: "red",
+                        color: "white",
+                        backgroundColor: "red"
+                      }}
+                    >
+                      delete
+                    </Button>
                     <br />
                     <TextField
                       id="outlined-basic"
@@ -155,7 +171,7 @@ const EditPosition = () => {
                 color="secondary"
                 onClick={addTaskFields}
               >
-                Add New Task
+                Add New Job Description Item
               </Button>
               <hr />
               <Button
@@ -175,7 +191,7 @@ const EditPosition = () => {
                 color="secondary"
                 onClick={deletePosition}
               >
-                Delete
+                Delete Position
               </Button>
             </form>
           </div>
