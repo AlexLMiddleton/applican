@@ -12,7 +12,6 @@ const {
 
 // List all positions
 positionsRouter.get(`/`, (req, res) => {
-  console.log(req.query.page);
   const page = parseInt(req.query.page) * 5;
   let sql =
     "SELECT * FROM positions_main WHERE status = 'open' LIMIT 5 OFFSET ?";
@@ -130,10 +129,11 @@ positionsRouter.get("/department_names", (req, res) => {
 
 // Get jobs in user-specified departments
 positionsRouter.get("/filtered_positions", (req, res) => {
-  const filters = req.query;
+  const filters = req.query.departmentSelected;
   const values = Object.values(filters);
-  let sql = `SELECT * FROM positions_main WHERE department IN (?) and status = 'open';`;
-  con.query(sql, [values], (error, result) => {
+  const page = parseInt(req.query.page) * 5;
+  let sql = `SELECT * FROM positions_main WHERE department IN (?) and status = 'open' LIMIT 5 OFFSET ?;`;
+  con.query(sql, [values, page], (error, result) => {
     if (error) {
       return res.send(error);
     } else {

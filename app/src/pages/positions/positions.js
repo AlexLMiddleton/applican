@@ -20,12 +20,24 @@ const Positions = () => {
   const [page, setPage] = useState(0);
 
   useEffect(() => {
-    axios
-      .get(`/api/positions?page=${page}`)
-      .then(res => setPositionsFetched(res.data));
-    axios
-      .get(`/api/positions/department_names`)
-      .then(res => setDepartmentsFetched(res.data));
+    if (departmentSelected.length === 0) {
+      axios
+        .get(`/api/positions?page=${page}`)
+        .then(res => setPositionsFetched(res.data));
+      axios
+        .get(`/api/positions/department_names`)
+        .then(res => setDepartmentsFetched(res.data));
+    } else {
+      axios
+        .get(`/api/positions/filtered_positions`, {
+          params: { departmentSelected, page }
+        })
+        .then(res => setPositionsFetched(res.data))
+        .catch(err => console.log(err));
+      axios
+        .get(`/api/positions/department_names`)
+        .then(res => setDepartmentsFetched(res.data));
+    }
   }, [page]);
 
   const handleChange = event => {
@@ -57,7 +69,7 @@ const Positions = () => {
     } else {
       axios
         .get(`/api/positions/filtered_positions`, {
-          params: departmentSelected
+          params: { departmentSelected, page }
         })
         .then(res => setPositionsFetched(res.data))
         .catch(err => console.log(err));
