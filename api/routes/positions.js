@@ -11,9 +11,12 @@ const {
 } = require("../auth/authorizeLevel");
 
 // List all positions
-positionsRouter.get("/", (req, res) => {
-  let sql = "SELECT * FROM positions_main WHERE status = 'open'";
-  con.query(sql, (err, result) => {
+positionsRouter.get(`/`, (req, res) => {
+  console.log(req.query.page);
+  const page = parseInt(req.query.page) * 5;
+  let sql =
+    "SELECT * FROM positions_main WHERE status = 'open' LIMIT 5 OFFSET ?";
+  con.query(sql, [page], (err, result) => {
     if (err) {
       return res.send(err);
     } else {

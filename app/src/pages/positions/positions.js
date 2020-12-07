@@ -17,13 +17,16 @@ const Positions = () => {
   const [departmentsFetched, setDepartmentsFetched] = useState([]);
   const [departmentSelected, setDepartmentSelected] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
-    axios.get("/api/positions").then(res => setPositionsFetched(res.data));
+    axios
+      .get(`/api/positions?page=${page}`)
+      .then(res => setPositionsFetched(res.data));
     axios
       .get(`/api/positions/department_names`)
       .then(res => setDepartmentsFetched(res.data));
-  }, []);
+  }, [page]);
 
   const handleChange = event => {
     if (departmentSelected.indexOf(event.target.name) >= 0) {
@@ -83,7 +86,7 @@ const Positions = () => {
     }
   };
 
-  console.log("Departments selected: ", departmentSelected);
+  console.log("Page number: ", page);
 
   return (
     <div className="outermostPositionsContainer">
@@ -98,7 +101,7 @@ const Positions = () => {
             <FormLabel component="legend">Filter by department(s):</FormLabel>
             <hr />
             <FormGroup>
-              {departmentsFetched &&
+              {departmentsFetched.length > 0 ? (
                 departmentsFetched.map((department, index) => (
                   <FormControlLabel
                     key={index}
@@ -111,7 +114,10 @@ const Positions = () => {
                     }
                     label={department.department}
                   />
-                ))}
+                ))
+              ) : (
+                <h1>No departments fetched.</h1>
+              )}
             </FormGroup>
           </FormControl>
           <Button
@@ -143,6 +149,30 @@ const Positions = () => {
               <h1>No results found.</h1>
             </>
           )}
+          <br />
+          {page > 0 ? (
+            <>
+              <Button
+                variant="contained"
+                size="large"
+                color="primary"
+                onClick={() => setPage(page - 1)}
+              >
+                Previous Page
+              </Button>
+              <span> | </span>{" "}
+            </>
+          ) : (
+            ""
+          )}
+          <Button
+            variant="contained"
+            size="large"
+            color="primary"
+            onClick={() => setPage(page + 1)}
+          >
+            Next Page
+          </Button>
         </div>
       </div>
     </div>
