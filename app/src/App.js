@@ -11,8 +11,6 @@ import CreateApplicant from "./pages/applicant/createApplicant";
 import CreatePosition from "./pages/position/createPosition";
 import EditApplicant from "./pages/applicant/editApplicant";
 import EditPosition from "./pages/position/editPosition";
-import SearchPositions from "./pages/search/positionsSearchResults";
-import SearchApplicants from "./pages/search/applicantsSearchResults";
 import PositionApplicants from "./pages/position-applicants/position-applicants";
 import ApplicantPositions from "./pages/applicant-positions/applicant-positions";
 import Signup from "./pages/signup/signup";
@@ -42,14 +40,6 @@ function App() {
         <Route path="/login" component={Login} />
         <Route exact path="/positions" component={Positions} />
         <Route exact path="/position/:id" component={Position} />
-        {/* <Route
-          path="/applicant/search/:searchTerm"
-          component={SearchApplicants}
-        />
-        <Route
-          path="/position/search/:searchTerm"
-          component={SearchPositions}
-        /> */}
 
         {/* User routes */}
         <UserRoute exact path="/new-application" component={CreateApplicant} />

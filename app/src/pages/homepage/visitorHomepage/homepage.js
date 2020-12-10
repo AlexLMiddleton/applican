@@ -30,7 +30,7 @@ const VisitorHomepage = () => {
     <div>
       <h1>Welcome to AppliCAN ...</h1>
       <h2>... the user-friendly applicant tracking system</h2>
-      <div className="homepage-options">
+      <div className="visitor-homepage-options">
         <Link to="/positions">
           <Paper elevation={3} square>
             <ListAltSharpIcon color={"primary"} />

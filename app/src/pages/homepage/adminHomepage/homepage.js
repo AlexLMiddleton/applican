@@ -9,11 +9,11 @@ import LockSharpIcon from "@material-ui/icons/LockSharp";
 
 import "./homepage.css";
 
-const TechnicianHomepage = () => {
+const AdminHomepage = () => {
   return (
     <div>
-      <h1>Technician Dashboard</h1>
-      <div className="technician-homepage-options">
+      <h1>Administrator Dashboard</h1>
+      <div className="admin-homepage-options">
         <Link to="/positions">
           <Paper elevation={3} square>
             <ListAltSharpIcon color={"primary"} />
@@ -42,9 +42,17 @@ const TechnicianHomepage = () => {
             Review Closed Position Postings
           </Paper>
         </Link>
+        <br />
+        <Link to="/admin/users">
+          <Paper elevation={3}>
+            <LockSharpIcon color={"primary"} />
+            <br />
+            View All Users
+          </Paper>
+        </Link>
       </div>
     </div>
   );
 };
 
-export default TechnicianHomepage;
+export default AdminHomepage;

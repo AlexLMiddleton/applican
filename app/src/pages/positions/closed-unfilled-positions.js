@@ -20,7 +20,7 @@ const ClosedUnfilledPositions = () => {
         {positions &&
           positions.map(position => (
             <div key={position.id}>
-              <Paper elevation={3} square>
+              <Paper style={{ padding: "2%" }} elevation={3} square>
                 <Link to={`/position/${position.id}`}>
                   <h2>{position.title}</h2>
                 </Link>

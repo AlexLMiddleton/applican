@@ -1,4 +1,4 @@
-.user-homepage-options {
+.admin-homepage-options {
   display: grid;
   grid-template-columns: 20vw 20vw 20vw;
   grid-row: auto auto;
@@ -8,7 +8,7 @@
   width: 100vw;
 }
 
-.user-homepage-options a div {
+.admin-homepage-options a div {
   width: 20vw;
   height: 25vh;
   margin-top: 5%;
@@ -16,6 +16,6 @@
   padding: 3%;
 }
 
-.user-homepage-options a div svg {
+.admin-homepage-options a div svg {
   font-size: 8em;
 }

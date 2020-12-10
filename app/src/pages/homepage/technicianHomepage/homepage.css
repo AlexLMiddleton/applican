@@ -1,15 +1,21 @@
-.homepage-options {
+.technician-homepage-options {
   display: grid;
-  grid-template-columns: 20vw 20vw;
+  grid-template-columns: 20vw 20vw 20vw;
   grid-row: auto auto;
   grid-column-gap: 5%;
   grid-row-gap: 5%;
-  height: 25vh;
-  width: 80vw;
+  justify-content: center;
+  width: 100vw;
 }
 
-.homepage-options a div {
+.technician-homepage-options a div {
   width: 20vw;
+  height: 25vh;
   margin-top: 5%;
   font-size: 1.5em;
+  padding: 3%;
+}
+
+.technician-homepage-options a div svg {
+  font-size: 8em;
 }

@@ -177,14 +177,18 @@ const Positions = () => {
           ) : (
             ""
           )}
-          <Button
-            variant="contained"
-            size="large"
-            color="primary"
-            onClick={() => setPage(page + 1)}
-          >
-            Next Page
-          </Button>
+          {positionsFetched.length === 5 ? (
+            <Button
+              variant="contained"
+              size="large"
+              color="primary"
+              onClick={() => setPage(page + 1)}
+            >
+              Next Page
+            </Button>
+          ) : (
+            ""
+          )}
         </div>
       </div>
     </div>

@@ -34,7 +34,7 @@ const UserHomepage = () => {
     <div>
       <h1>AppliCAN</h1>
       {!loading ? (
-        <div className="homepage-options">
+        <div className="user-homepage-options">
           <Link to="/positions">
             <Paper elevation={3} square>
               <ListAltSharpIcon color={"primary"} />

@@ -1,22 +1,21 @@
-.homepage-options {
-  height: 65vh;
-  width: 80%;
-  margin: auto;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  align-items: center;
+.visitor-homepage-options {
+  display: grid;
+  grid-template-columns: 20vw 20vw 20vw;
+  grid-row: auto auto;
+  grid-column-gap: 5%;
+  grid-row-gap: 5%;
+  justify-content: center;
+  width: 100vw;
 }
 
-.homepage-options a {
-  margin-top: 1%;
-  font-size: 1em;
+.visitor-homepage-options a div {
+  width: 20vw;
+  height: 25vh;
+  margin-top: 5%;
+  font-size: 1.5em;
+  padding: 3%;
 }
 
-.homepage-options a div {
-  padding: 3% 3%;
-}
-
-.homepage-options a div svg {
+.visitor-homepage-options a div svg {
   font-size: 8em;
 }
