@@ -57,9 +57,9 @@ const Users = () => {
                     id="demo-simple-select-outlined"
                     name="level"
                     id="level"
-                    value={user[index].level}
                     label="Level"
-                    onChange={e =>
+                    value={user.level}
+                    onChange={(e, index) =>
                       setAdjustment({
                         ...adjustment,
                         id: user.id,
@@ -69,7 +69,9 @@ const Users = () => {
                   >
                     {roles &&
                       roles.map((role, index) => (
-                        <MenuItem key={index}>{role.level}</MenuItem>
+                        <MenuItem key={index} value={role.level}>
+                          {role.level}
+                        </MenuItem>
                       ))}
                   </Select>
                 </FormControl>
