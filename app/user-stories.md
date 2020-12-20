@@ -53,7 +53,7 @@ Technicians should be able to:
 
 - [x] Log in
 - [x] Create, read, update, delete, and list applicants
-- [ ] Create, read, update, delete, and list technicians
+- [x] Create, read, update, delete, and list technicians
 - [x] Create, read, update, delete, and list positions
 - [x] Assign varying levels of privileges to users (i.e. user, technician, administrator)
 - [ ] View usage logs

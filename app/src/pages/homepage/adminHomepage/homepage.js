@@ -39,7 +39,7 @@ const AdminHomepage = () => {
           <Paper elevation={3} square>
             <LockSharpIcon color={"primary"} />
             <br />
-            Review Closed Position Postings
+            Closed, Filled Positions
           </Paper>
         </Link>
         <br />

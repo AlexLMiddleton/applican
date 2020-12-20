@@ -88,9 +88,11 @@ positionsRouter.post(
             });
           }
           const userID = result.insertId;
-          const descriptionInfo = tasks.map(task => [userID, task]);
+          console.log("Tasks: ", tasks);
+          const descriptionInfo = tasks.map(task => [userID, task[0], task[1]]);
+          console.log("Description info: ", descriptionInfo);
           con.query(
-            `INSERT INTO position_description (position, tasks) VALUES ?`,
+            `INSERT INTO position_description (position, tasks, task_order) VALUES ?`,
             [descriptionInfo],
             (error, result) => {
               if (error) {

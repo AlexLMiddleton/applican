@@ -14,7 +14,8 @@ const CreatePosition = () => {
   });
   const [task, setTask] = useState([
     {
-      description: ""
+      description: "",
+      task_order: ""
     }
   ]);
 
@@ -31,6 +32,8 @@ const CreatePosition = () => {
     } else {
       const values = [...task];
       values[index][event.target.name] = event.target.value;
+      values[index]["task_order"] = index;
+      console.log(values);
       setTask(values);
     }
   };
@@ -142,7 +145,7 @@ const CreatePosition = () => {
             color="secondary"
             onClick={addTaskFields}
           >
-            Add New Task
+            Add New Item
           </Button>
           <hr />
           <Button
